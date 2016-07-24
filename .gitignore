@@ -1,0 +1,25 @@
+# PHP-related files
+.idea/
+.phpintel/
+/vendor/
+/phpunit.xml
+/twigc.phar
+
+# OS X-generated files
+._*
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+Icon\?
+
+# Windows-generated files
+Desktop.ini
+ehthumbs.db
+Thumbs.db
+
+# Editor-generated files
+*~
+.*.s[a-w][a-z]
+*.sublime-workspace
+
