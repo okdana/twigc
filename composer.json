@@ -1,0 +1,25 @@
+{
+	"name":        "dana/twigc",
+	"description": "A CLI utility for rendering Twig templates",
+	"homepage":    "https://github.com/okdana/twigc",
+	"keywords":    ["twig", "compile", "render", "template", "cli"],
+	"license":     "MIT",
+
+	"require": {
+		"php":             ">=5.5.0",
+		"symfony/console": "^3.1",
+		"twig/twig":       "^1.24"
+	},
+
+	"require-dev": {
+		"phpunit/phpunit": "^5.4",
+		"symfony/finder":  "^3.1"
+	},
+
+	"autoload": {
+		"psr-4": {"Dana\\Twigc\\": "src/Twigc"}
+	},
+
+	"bin": ["bin/twigc"]
+}
+
