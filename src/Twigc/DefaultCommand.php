@@ -52,6 +52,12 @@ class DefaultCommand extends Command {
 				'Display dependency credits (including Twig version)'
 			)
 			->addOption(
+				'cache',
+				null,
+				InputOption::VALUE_REQUIRED,
+				'Enable caching to specified directory'
+			)
+			->addOption(
 				'dir',
 				'd',
 				InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
@@ -192,6 +198,8 @@ class DefaultCommand extends Command {
 		$inputData = [];
 		$template  = $input->getArgument('template');
 		$template  = $template === null ? '-' : $template;
+		$cache     = $input->getOption('cache');
+		$cache     = $cache === null ? false : $cache;
 		$dirs      = $template === '-'  ? []  : [dirname($template)];
 		$dirs      = array_merge($dirs, $input->getOption('dir'));
 		$temp      = false;
@@ -346,7 +354,7 @@ class DefaultCommand extends Command {
 
 		try {
 			$twig = new \Twig_Environment($loader, [
-				'cache'            => false,
+				'cache'            => $cache,
 				'debug'            => false,
 				'strict_variables' => $strict,
 				'autoescape'       => $escape,
