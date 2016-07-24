@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * This file is part of twigc.
+ *
+ * @author  dana geier <dana@dana.is>
+ * @license MIT
+ */
+
+require_once __DIR__ . '/../src/bootstrap.php';
+
+$verbose     = false;
+$verboseArgs = ['v', 'vv', 'vvv', 'verbose', 'debug'];
+
+foreach ( $argv as $arg ) {
+	if ( in_array(ltrim($arg, '-'), $verboseArgs, true) ) {
+		$verbose = true;
+		break;
+	}
+}
+
+(new \Dana\Twigc\PharCompiler($verbose))->compile();
+

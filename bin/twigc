@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * This file is part of twigc.
+ *
+ * @author  dana geier <dana@dana.is>
+ * @license MIT
+ */
+
+require_once __DIR__ . '/../src/bootstrap.php';
+
+(new \Dana\Twigc\Application())->run();
+
