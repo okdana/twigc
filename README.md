@@ -56,20 +56,21 @@ JSON data can also be provided by file path or on standard input:
 ```
 
 Normally, input data is [auto-escaped](http://twig.sensiolabs.org/doc/api.html)
-for HTML before rendering, but this is configurable:
+based on the template file extension (or disabled by default if using standard
+input), but this is configurable:
 
 ```
 % twigc -p 'html=<p>Hello!</p>' <<< '{{ html }}'
-&lt;p&gt;Hello!&lt;/p&gt;
+<p>Hello!</p>
 
-% twigc -p 'html=<p>Hello!</p>' -e 'url' <<< '{{ html }}'
-%3Cp%3EHello%21%3C%2Fp%3E
+% twigc -p 'html=<p>Hello!</p>' -e 'html' <<< '{{ html }}'
+&lt;p&gt;Hello!&lt;/p&gt;
 
 % twigc -p 'html=<p>Hello!</p>' -e 'js' <<< '{{ html }}'
 \x3Cp\x3EHello\x21\x3C\x2Fp\x3E
 
-% twigc -p 'html=<p>Hello!</p>' -e 'false' <<< '{{ html }}'
-<p>Hello!</p>
+% twigc -p 'html=<p>Hello!</p>' -e 'url' <<< '{{ html }}'
+%3Cp%3EHello%21%3C%2Fp%3E
 ```
 
 By default, references in the template to undefined variables are silently

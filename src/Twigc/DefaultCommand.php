@@ -226,16 +226,55 @@ class DefaultCommand extends Command {
 			}
 		}
 
-		// Normalise auto-escape setting
+		// If no escape option was supplied, try to auto-detect
+		// (we could do this with Twig's 'filename' method, but i have some
+		//  control over this)
 		if ( $escape === null ) {
-			$escape = true;
+			if ( substr($template, -5) === '.twig' ) {
+				$ext = pathinfo(substr($template, -5), \PATHINFO_EXTENSION);
+			} else {
+				$ext = pathinfo($template, \PATHINFO_EXTENSION);
+			}
+
+			switch ( strtolower($ext) ) {
+				case 'template':
+				case 'tmpl':
+				case 'tpl':
+				case 'htm':
+				case 'html':
+				case 'phtml':
+				case 'thtml':
+				case 'xhtml':
+					$escape = 'html';
+					break;
+				case 'css':
+				case 'scss':
+					$escape = 'css';
+					break;
+				case 'js':
+					$escape = 'js';
+					break;
+				default:
+					$escape = false;
+					break;
+			}
+
+		// Otherwise, try to parse the supplied method
 		} else {
+			// Normalise some boolean values
+			$escape = strtolower($escape);
+			$escape = $escape === 'f'      ? 'false' : $escape;
+			$escape = $escape === 'n'      ? 'false' : $escape;
+			$escape = $escape === 'none'   ? 'false' : $escape;
+			$escape = $escape === 'never'  ? 'false' : $escape;
+			$escape = $escape === 't'      ? 'true'  : $escape;
+			$escape = $escape === 'y'      ? 'true'  : $escape;
+			$escape = $escape === 'always' ? 'true'  : $escape;
+
 			$bool = filter_var($escape, \FILTER_VALIDATE_BOOLEAN, \FILTER_NULL_ON_FAILURE);
 
 			if ( $bool !== null ) {
-				$escape = $bool;
-			} else {
-				$escape = strtolower($escape);
+				$escape = $bool ? 'html' : false;
 			}
 		}
 
