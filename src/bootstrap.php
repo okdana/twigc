@@ -31,17 +31,34 @@ function twigc_puts_error($string = '') {
 	}
 }
 
+// Find Composer's auto-loader
+$autoloaders = [
+	// Phar/repo path
+	__DIR__ . '/../vendor/autoload.php',
+	// Composer path
+	__DIR__ . '/../../../autoload.php',
+];
+
+foreach ( $autoloaders as $autoloader ) {
+	if ( file_exists($autoloader) ) {
+		define('TWIGC_AUTOLOADER', $autoloader);
+		break;
+	}
+}
+
+unset($autoloaders, $autoloader);
+
 // Disallow running from non-CLI SAPIs
 if ( \PHP_SAPI !== 'cli' ) {
 	twigc_puts_error("This tool must be invoked via PHP's CLI SAPI.");
 	exit(1);
 }
 
-// Give a meaningful error if we don't have our vendor dependencies
-if ( ! file_exists(__DIR__ . '/../vendor/autoload.php') ) {
+// Give a meaningful error if we don't have the auto-loader
+if ( ! defined('TWIGC_AUTOLOADER') ) {
 	twigc_puts_error('Auto-loader is missing — try running `composer install`.');
 	exit(1);
 }
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once TWIGC_AUTOLOADER;
 
