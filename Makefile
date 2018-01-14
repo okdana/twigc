@@ -10,7 +10,7 @@ vendor:
 	composer install
 
 twigc.phar: vendor
-	php bin/compile
+	php -d phar.readonly=0 bin/compile
 
 build: twigc.phar
 
