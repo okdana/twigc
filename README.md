@@ -19,6 +19,7 @@ Options:
   -V, --version        Display version information
       --credits        Display dependency credits (including Twig version)
   -d, --dir=DIR        Add search directory to loader (multiple values allowed)
+      --env            Treat environment variables as input data
   -e, --escape=ESCAPE  Set autoescape environment option
   -j, --json=JSON      Pass variables as JSON (dictionary string or file path)
   -p, --pair=PAIR      Pass variable as key=value pair (multiple values allowed)

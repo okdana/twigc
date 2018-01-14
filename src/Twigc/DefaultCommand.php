@@ -64,6 +64,12 @@ class DefaultCommand extends Command {
 				'Add search directory to loader'
 			)
 			->addOption(
+				'env',
+				null,
+				InputOption::VALUE_NONE,
+				'Treat environment variables as input data'
+			)
+			->addOption(
 				'escape',
 				'e',
 				InputOption::VALUE_REQUIRED,
@@ -347,6 +353,10 @@ class DefaultCommand extends Command {
 
 				$inputData[$kv[0]] = $kv[1];
 			}
+		}
+
+		if ( $input->getOption('env') ) {
+			$inputData = array_merge($_ENV, $inputData);
 		}
 
 		// Validate key names now
