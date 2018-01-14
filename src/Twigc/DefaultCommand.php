@@ -260,6 +260,9 @@ class DefaultCommand extends Command {
 				case 'js':
 					$escape = 'js';
 					break;
+				case 'json':
+					$escape = 'json';
+					break;
 				default:
 					$escape = false;
 					break;
@@ -408,6 +411,16 @@ class DefaultCommand extends Command {
 				'strict_variables' => $strict,
 				'autoescape'       => $escape,
 			]);
+
+			$twig->getExtension('core')->setEscaper(
+				'json',
+				function($twigEnv, $string, $charset) {
+					return json_encode(
+						$string,
+						\JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE
+					);
+				}
+			);
 
 			$output->writeln(
 				rtrim($twig->render(basename($template), $inputData), "\r\n")
