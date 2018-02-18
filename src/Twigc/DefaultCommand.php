@@ -64,6 +64,12 @@ class DefaultCommand extends Command {
 				'Add search directory to loader'
 			)
 			->addOption(
+				'env',
+				null,
+				InputOption::VALUE_NONE,
+				'Treat environment variables as input data'
+			)
+			->addOption(
 				'escape',
 				'e',
 				InputOption::VALUE_REQUIRED,
@@ -254,6 +260,9 @@ class DefaultCommand extends Command {
 				case 'js':
 					$escape = 'js';
 					break;
+				case 'json':
+					$escape = 'json';
+					break;
 				default:
 					$escape = false;
 					break;
@@ -349,6 +358,10 @@ class DefaultCommand extends Command {
 			}
 		}
 
+		if ( $input->getOption('env') ) {
+			$inputData = array_merge($_ENV, $inputData);
+		}
+
 		// Validate key names now
 		foreach ( $inputData as $key => $value ) {
 			if ( ! preg_match('#^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$#', $key) ) {
@@ -398,6 +411,16 @@ class DefaultCommand extends Command {
 				'strict_variables' => $strict,
 				'autoescape'       => $escape,
 			]);
+
+			$twig->getExtension('core')->setEscaper(
+				'json',
+				function($twigEnv, $string, $charset) {
+					return json_encode(
+						$string,
+						\JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE
+					);
+				}
+			);
 
 			$output->writeln(
 				rtrim($twig->render(basename($template), $inputData), "\r\n")
