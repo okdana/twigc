@@ -1,25 +1,33 @@
 {
-	"name":        "dana/twigc",
-	"description": "A CLI utility for rendering Twig templates",
-	"homepage":    "https://github.com/okdana/twigc",
-	"keywords":    ["twig", "compile", "render", "template", "cli"],
-	"license":     "MIT",
+  "_comments": {
+    "symfony/finder": [
+      "This is only required for the Phar build, actually!",
+      "I added it to the regular requires just to fix a problem with Composer.",
+      "Some day i'd like to put it back..."
+    ]
+  },
 
-	"require": {
-		"php":             ">=5.5.0",
-		"symfony/console": "^3.1",
-		"twig/twig":       "^1.24"
-	},
+  "name":        "dana/twigc",
+  "description": "CLI tool for rendering Twig templates",
+  "homepage":    "https://github.com/okdana/twigc",
+  "keywords":    ["twig", "compile", "render", "template", "cli"],
+  "license":     "MIT",
 
-	"require-dev": {
-		"phpunit/phpunit": "^5.4",
-		"symfony/finder":  "^3.1"
-	},
+  "require": {
+    "php":                 ">=7.0",
+    "symfony/console":     "^4.0",
+    "symfony/finder":      "^4.0",
+    "twig/twig":           "^2.4",
+    "ulrichsg/getopt-php": "^3.1"
+  },
 
-	"autoload": {
-		"psr-4": {"Dana\\Twigc\\": "src/Twigc"}
-	},
+  "require-dev": {
+    "phpunit/phpunit": "^6.5"
+  },
 
-	"bin": ["bin/twigc"]
+  "autoload": {
+    "psr-4": {"Dana\\Twigc\\": "src/Twigc"}
+  },
+
+  "bin": ["bin/twigc"]
 }
-
