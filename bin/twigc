@@ -4,11 +4,16 @@
 /**
  * This file is part of twigc.
  *
- * @author  dana geier <dana@dana.is>
+ * @author  dana <dana@dana.is>
  * @license MIT
  */
 
 require_once __DIR__ . '/../src/bootstrap.php';
 
-(new \Dana\Twigc\Application())->run();
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Dana\Twigc\Application;
 
+$output = new ConsoleOutput();
+$app    = new Application();
+
+exit($app->run($output));
