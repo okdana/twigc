@@ -4,21 +4,23 @@
 /**
  * This file is part of twigc.
  *
- * @author  dana geier <dana@dana.is>
+ * @author  dana <dana@dana.is>
  * @license MIT
  */
 
 require_once __DIR__ . '/../src/bootstrap.php';
 
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Dana\Twigc\PharCompiler;
+
 $verbose     = false;
 $verboseArgs = ['v', 'vv', 'vvv', 'verbose', 'debug'];
 
 foreach ( $argv as $arg ) {
-	if ( in_array(ltrim($arg, '-'), $verboseArgs, true) ) {
-		$verbose = true;
-		break;
-	}
+  if ( in_array(ltrim($arg, '-'), $verboseArgs, true) ) {
+    $verbose = true;
+    break;
+  }
 }
 
-(new \Dana\Twigc\PharCompiler($verbose))->compile();
-
+(new PharCompiler(new ConsoleOutput(), $verbose))->compile('twigc.phar');
