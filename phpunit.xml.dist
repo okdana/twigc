@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+  bootstrap="src/bootstrap.php"
+  colors="true"
+  verbose="true"
+  convertErrorsToExceptions="true"
+  stopOnFailure="false"
+>
+  <!-- Output settings -->
+  <logging>
+    <!-- Output code coverage information -->
+    <log type="coverage-text" target="php://stdout" showUncoveredFiles="true" />
+    <log type="coverage-html" target="coverage"     showUncoveredFiles="true" />
+  </logging>
+
+  <!-- Code-coverage filter -->
+  <filter>
+    <whitelist>
+      <directory suffix=".php">src</directory>
+    </whitelist>
+  </filter>
+
+  <!-- Test suite -->
+  <testsuites>
+    <testsuite name="\Dana\Twigc test suite">
+      <directory suffix="Test.php">tests</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>
