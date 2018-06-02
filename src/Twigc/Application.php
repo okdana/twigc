@@ -13,6 +13,7 @@ use GetOpt\{Argument,GetOpt,Operand,Option};
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\{ConsoleOutputInterface,OutputInterface};
 use Twig\Environment;
+use Twig\Extension\EscaperExtension;
 use Twig\Loader\{ArrayLoader,FilesystemLoader};
 
 use Dana\Twigc\ComposerHelper;
@@ -122,7 +123,7 @@ class Application {
     $temp      = false;
 
     // If we're receiving data on standard input, and we didn't get a template,
-    // assume `-` — we'll make sure this doesn't conflict with `-j` below
+    // assume `-` — we'll make sure this doesn't conflict with `-j` below
     if ( ! posix_isatty(\STDIN) ) {
       $template = $template ?? '-';
     }
@@ -249,18 +250,18 @@ class Application {
         ),
       ]);
 
-      $twig->getExtension('Twig_Extension_Core')->setEscaper(
+      $twig->getExtension(EscaperExtension::class)->setEscaper(
         'json',
-        function($twigEnv, $string, $charset) {
+        function ($twigEnv, $string, $charset) {
           return json_encode(
             $string,
             \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE
           );
         }
       );
-      $twig->getExtension('Twig_Extension_Core')->setEscaper(
+      $twig->getExtension(EscaperExtension::class)->setEscaper(
         'sh',
-        function($twigEnv, $string, $charset) {
+        function ($twigEnv, $string, $charset) {
           return '"' . addcslashes($string, '$`\\"') . '"';
         }
       );
@@ -337,9 +338,9 @@ class Application {
 
     $table = new Table($output);
     $table->setStyle('compact');
-    $table->getStyle()->setVerticalBorderChar('');
+    $table->getStyle()->setVerticalBorderChars('');
     $table->getStyle()->setCellRowContentFormat('%s  ');
-    $table->setHeaders(['name', 'version', 'licence']);
+    $table->setHeaders(['#name', 'version', 'licence']);
 
     foreach ( $packages as $package ) {
       $table->addRow([
