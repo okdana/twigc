@@ -1,0 +1,51 @@
+#compdef twigc
+
+local ret=1
+local -a context expl line state state_descr tmp
+local -A opt_args
+
+_arguments -s -S : \
+  '(: * -)'{-h,--help}'[display help information]' \
+  '(: * -)'{-V,--version}'[display version information]' \
+  '(: * -)--credits[display third-party dependency information]' \
+  '--cache=[specify cache directory]:cache directory:_directories' \
+  '*'{-d+,--dir=}'[add specified include directory]:include directory:_directories' \
+  '(-e --escape)'{-e+,--escape=}'[specify auto-escaping strategy]: :->strategies' \
+  '(-E --env)'{-E,--env}'[derive input data from environment]' \
+  '*'{-j+,--json=}'[derive input data from specified JSON dict/file]: :->json' \
+  '*'{-p+,--pair=}'[derive input data from specified key=value pair]:key=value pair' \
+  '*--query=[derive input data from specified URL query string]:URL query string' \
+  '(-s --strict)'{-s,--strict}'[throw exception when undefined variable is referenced]' \
+  '*:template file:_files' \
+&& ret=0
+
+case $state in
+  json)
+    if [[ $PREFIX$SUFFIX == [[:space:]]#\{* ]]; then
+      _message -e strings 'JSON dictionary string'
+    elif [[ -n $PREFIX$SUFFIX ]]; then
+      _description files expl 'JSON file'
+      _files "${(@)expl}" && ret=0
+    else
+      _alternative \
+        'strings: : _message -e strings "JSON dictionary string"' \
+        'files:JSON file:_files' \
+      && ret=0
+    fi
+    ;;
+  strategies)
+    tmp=(
+      'none:no escaping'
+      'css:CSS hex-escaping'
+      'html:HTML ampersand-escaping (for body)'
+      'html_attr:HTML ampersand-escaping (for attribute)'
+      'js:JavaScript hex-escaping'
+      'json:JSON serialization'
+      'sh:shell double-quoting and escaping'
+      'url:URL percent-escaping'
+    )
+    _describe -t strategies 'auto-escaping strategy' tmp && ret=0
+    ;;
+esac
+
+return ret
