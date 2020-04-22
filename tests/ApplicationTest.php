@@ -178,7 +178,7 @@ class ApplicationTest extends TestCase {
       ['html_attr', 'testEnv: &quot;&lt;foo&#x24;bar&gt;&quot;'],
 
       // Escape method: js
-      ['js', 'testEnv: \\x22\\x3Cfoo\\x24bar\\x3E\\x22'],
+      ['js', 'testEnv: \\u0022\\u003Cfoo\\u0024bar\\u003E\\u0022'],
 
       // Escape method: json
       ['json', 'testEnv: "\"<foo$bar>\""'],
