@@ -30,7 +30,7 @@ use Dana\Twigc\ComposerHelper;
  */
 class Application {
   const NAME       = 'twigc';
-  const VERSION    = '0.3.1';
+  const VERSION    = '0.4.0';
   const BUILD_DATE = '%BUILD_DATE%'; // Replaced during build
 
   protected $name;
