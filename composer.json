@@ -1,9 +1,8 @@
 {
   "_comments": {
     "symfony/finder": [
-      "This is only required for the Phar build, actually!",
-      "I added it to the regular requires just to fix a problem with Composer.",
-      "Some day i'd like to put it back..."
+      "This is only required for the Phar build, actually. Can't remember what",
+      "the problem was with making it require-dev, but some day i'll fix it..."
     ]
   },
 
@@ -14,11 +13,11 @@
   "license":     "MIT",
 
   "require": {
-    "php":                 ">=7.0",
-    "symfony/console":     "^4.0",
-    "symfony/finder":      "^4.0",
-    "twig/twig":           "^2.4",
-    "ulrichsg/getopt-php": "^3.1"
+    "php":                 ">=7.2.5",
+    "symfony/console":     "^5.0",
+    "symfony/finder":      "^5.0",
+    "twig/twig":           "^3.0",
+    "ulrichsg/getopt-php": "^3.3"
   },
 
   "require-dev": {
