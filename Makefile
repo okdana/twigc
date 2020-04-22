@@ -4,6 +4,9 @@
 # @author  dana <dana@dana.is>
 # @license MIT
 
+prefix ?= /usr/local
+bindir ?= $(prefix)/bin
+
 all:   build
 build: phar
 phar:  clean twigc.phar
@@ -40,7 +43,7 @@ test-integration: twigc.phar
 	echo 'hello {{ name }}' | ./twigc.phar -p name=foo | grep -qF 'hello foo'
 
 install: twigc.phar
-	cp twigc.phar /usr/local/bin/twigc
+	cp twigc.phar $(DESTDIR)$(bindir)/twigc
 
 clean:
 	rm -f twigc.phar
@@ -48,4 +51,4 @@ clean:
 distclean: clean
 	rm -rf vendor/
 
-.PHONY: all clean distclean install test test-integration test-unit
+.PHONY: all build clean distclean help install phar test test-integration test-unit
